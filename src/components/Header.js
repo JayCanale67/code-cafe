@@ -1,11 +1,14 @@
+import { Link } from 'react-router-dom';
 import CoffeeLogo from '../images/logo.svg';
 import './Header.css';
 
 function Header(){
   return(
     <header className="header-component">
-      <img src={CoffeeLogo} alt="Coffee Logo" />
-      <h1>Code Cafe</h1>
+      <Link to="/">
+        <img src={CoffeeLogo} alt="coffee logo" />
+        <h1>Code Cafe</h1>
+        </Link>
     </header>
   );
 }

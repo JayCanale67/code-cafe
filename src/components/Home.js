@@ -1,16 +1,17 @@
 import Thumbnail from "./Thumbnail";
 import { itemImages } from "../items";
-import './Home.css';
+import "./Home.css";
 
-function Home ({items}){
-  return(
+function Home({ items }) {
+  return (
     <div className="home-component">
-      { items.map((item) => (
-        <Thumbnail 
-         key={item.itemId}
-         image={itemImages[item.imageId]} 
-         title={item.title}
-        />        
+      {items.map((item) => (
+        <Thumbnail
+          key={item.itemId}
+          itemId={item.item}
+          image={itemImages[item.imageId]}
+          title={item.title}
+        />
       ))}
     </div>
   );
