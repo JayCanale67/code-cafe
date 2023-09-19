@@ -26,7 +26,7 @@ function App() {
       <Header cart={cart} />
       {items.length === 0 ? <div>Loading...</div> : (
       <Routes>
-        <Route path="/cart" element={<Cart cart={cart} items={items} />} />
+        <Route path="/cart" element={<Cart cart={cart} dispatch={dispatch} items={items} />} />
         <Route path="/details" element={<Details items={items} />}>
           <Route path=":id" element={<DetailItem items={items} addToCart={addToCart}/>}/>
           <Route index element={<div>No Item Selected</div>}/>

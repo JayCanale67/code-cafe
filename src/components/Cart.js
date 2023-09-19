@@ -1,7 +1,7 @@
 import "./Cart.css";
 import CartRow from './CartRow';
 
-function Cart({cart, items}) {
+function Cart({cart, dispatch, items}) {
   return (
     <div className="cart-component">
       <h2>Your Cart</h2>
@@ -15,7 +15,7 @@ function Cart({cart, items}) {
         </thead>
         <tbody>
           {cart.map((item) => (
-            <CartRow key={item.itemId} cartItem={item} items={items} />
+            <CartRow key={item.itemId} cartItem={item} items={items} dispatch={dispatch}/>
           ))}
         </tbody>
       </table>
