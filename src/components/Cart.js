@@ -18,7 +18,7 @@ function Cart({cart, dispatch, items}) {
   const taxRate = taxPercentage / 100;
   const tax = subTotal * taxRate;
   const total = subTotal + tax;
-
+  const isFormValid = zipCode.length === 5 && name.trim();
 
   const submitOrder = (event) => {
     event.preventDefault();
@@ -26,6 +26,23 @@ function Cart({cart, dispatch, items}) {
     console.log('name: ', name);
     console.log('phone: ', phone);
     console.log('zipcode: ', zipCode);
+  };
+
+  const setFormattedPhone = (newNumber) => {
+    const digits = newNumber.replace(/\D/g, '');
+    let formatted = digits.substring(0,3);
+    if(digits.length === 3 && newNumber[3] === '-') {
+      formatted = `${formatted}-`;
+    } else if(digits.length > 3) {
+      formatted = `${formatted} - ${digits.substring(3,6)}`;
+    }
+
+    if(digits.length === 6 && newNumber[7] === '-') {
+      formatted = `${formatted}-`;
+    } else if(digits.length > 6) {
+      formatted = `${formatted} - ${digits.substring(6,10)}`;
+    }
+    setPhone(formatted);
   };
 
   return (
@@ -53,10 +70,10 @@ function Cart({cart, dispatch, items}) {
           <div>Total: ${total.toFixed(2)}</div>
           <h2>Checkout</h2>
           <form onSubmit={submitOrder}>
-            <label htmlFor="name">Name<input id="name" type="text" value={name} onChange={(event) => setName(event.target.value)}/></label>
-            <label htmlFor="phone">Phone Number<input id="phone" type="tel" value={phone} onChange={(event) => setPhone(event.target.value)}/></label>
-            <label htmlFor="zipcode">Zip Code<input id="zipcode" type="text" maxLength="5" inputMode="numeric"  value={zipCode} onChange={(event) => setZipCode(event.target.value)}/></label>
-            <button type='submit'>Order Now</button>
+            <label htmlFor="name">Name<input id="name" type="text" value={name} onChange={(event) => setName(event.target.value)} required/></label>
+            <label htmlFor="phone">Phone Number<input id="phone" type="tel" value={phone} onChange={(event) => setFormattedPhone(event.target.value)} required/></label>
+            <label htmlFor="zipcode">Zip Code<input id="zipcode" type="text" maxLength="5" inputMode="numeric"  value={zipCode} onChange={(event) => setZipCode(event.target.value)} required/></label>
+            <button type='submit' disabled={!isFormValid}>Order Now</button>
           </form>
         </>
       )}
