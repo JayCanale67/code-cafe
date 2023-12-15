@@ -28,7 +28,8 @@ function Cart({ cart, dispatch, items }) {
 
   const submitOrder = (event) => {
     event.preventDefault();
-    //TODO
+    axios.post(`/api/orders`, { items: cart, name, phone, zipCode, });
+    console.log('Order submitted');
   };
 
   const setFormattedPhone = (newNumber) => {
