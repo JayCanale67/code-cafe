@@ -2,6 +2,8 @@ import "./Cart.css";
 import axios from "axios";
 import CartRow from "./CartRow";
 import { useState, useRef } from "react";
+import Alert from './Alert';
+import { CartTypes } from "../reducer/cartReducer";
 
 function Cart({ cart, dispatch, items }) {
   const [name, setName] = useState("");
@@ -9,6 +11,7 @@ function Cart({ cart, dispatch, items }) {
   const [zipCode, setZipCode] = useState("");
   const [isEmployeeOfTheMonth, setIsEmployeeOfTheMonth] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const subTotal = isEmployeeOfTheMonth
     ? 0
@@ -33,12 +36,14 @@ function Cart({ cart, dispatch, items }) {
     try {
       await axios.post(`/api/orders`, { items: cart, name, phone, zipCode });
       console.log("Order submitted");
+      setShowSuccessAlert(true);
       setName("");
       setPhone("");
       setZipCode("");
       try{
         const orders = await axios.get(`/api/orders`);
         console.log("Jay got:" + orders.data.length);
+        dispatch({type: CartTypes.EMPTY});
       } catch(error){
 
       }
@@ -85,6 +90,7 @@ function Cart({ cart, dispatch, items }) {
 
   return (
     <div className="cart-component">
+      <Alert visible={showSuccessAlert}>Thank you for your order!</Alert>
       <h2>Your Cart</h2>
       {cart.length === 0 ? (
         <div>Your cart is empty!</div>

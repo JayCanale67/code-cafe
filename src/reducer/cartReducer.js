@@ -1,5 +1,5 @@
 export const initialCartState = [];
-export const CartTypes = { ADD: 'ADD', REMOVE: 'REMOVE'};
+export const CartTypes = { ADD: 'ADD', EMPTY: 'EMPTY', REMOVE: 'REMOVE'};
 
 const findItem = (cart, itemId) => cart.find((item) => item.itemId === itemId);
 
@@ -17,6 +17,8 @@ export const cartReducer = (state, action) => {
       ];
     case CartTypes.REMOVE:
       return state.filter((item) => item.itemId !== action.itemId);
+    case CartTypes.EMPTY:
+      return [];
     default:
       throw new Error('Invalid action type ${action.type}');
   }
